@@ -1,0 +1,23 @@
+@if not defined DEBUG echo off
+call env.cmd
+
+if exist docker-compose.override.yml (
+    docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+    if ErrorLevel 1 goto failure
+) else (
+    docker compose up -d
+    if ErrorLevel 1 goto failure
+)
+
+:complete
+goto end
+
+:failure
+if ErrorLevel 1 goto end
+:: strict fail
+echo [1] %0 %*
+exit /b 1
+
+:end
+if ErrorLevel 1 echo [%ErrorLevel%] %0 %*
+exit /b %ErrorLevel%

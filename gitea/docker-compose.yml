@@ -1,0 +1,38 @@
+services:
+  server:
+    cap_drop:
+      - ALL
+    env_file: env/server.env
+    hostname: gitea-server
+    image: docker.gitea.com/gitea:${SERVER_VERSION}-rootless
+    logging:
+      options:
+        max-file: "${DOCKER_LOG_MAX_FILE:-30}"
+        max-size: "${DOCKER_LOG_MAX_SIZE:-10m}"
+    networks:
+      - proxy_default
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+    volumes:
+      - config:/etc/gitea
+      - data:/var/lib/gitea
+networks:
+  proxy_default:
+    external: true
+volumes:
+  config:
+    driver: local
+    driver_opts:
+      device: ${CONFIG_DIR}
+      o: 'bind'
+      type: 'none'
+  data:
+    driver: local
+    driver_opts:
+      device: ${DATA_DIR}
+      o: 'bind'
+      type: 'none'
