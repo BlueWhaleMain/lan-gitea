@@ -1,5 +1,6 @@
 @if not defined DEBUG echo off
 call env.cmd
+if ErrorLevel 1 goto failure
 
 if exist %IMAGES_SAVE_DIR%\gitea-%SERVER_VERSION%-rootless.tar.gz (
     docker load -i %IMAGES_SAVE_DIR%\gitea-%SERVER_VERSION%-rootless.tar.gz

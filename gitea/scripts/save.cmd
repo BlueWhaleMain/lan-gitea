@@ -1,7 +1,9 @@
 @if not defined DEBUG echo off
 call env.cmd
+if ErrorLevel 1 goto failure
 
 if not exist %IMAGES_SAVE_DIR% mkdir %IMAGES_SAVE_DIR%
+if ErrorLevel 1 goto failure
 
 call docker_save.cmd docker.gitea.com/gitea gitea-%SERVER_VERSION%-rootless %SERVER_VERSION%-rootless
 if ErrorLevel 1 goto failure

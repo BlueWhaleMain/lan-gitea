@@ -1,5 +1,6 @@
 @if not defined DEBUG echo off
 call env.cmd
+if ErrorLevel 1 goto failure
 
 docker image ls | wsl grep "%1:%3"
 if ErrorLevel 1 echo. & goto failure

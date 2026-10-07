@@ -1,5 +1,6 @@
 @if not defined DEBUG echo off
 call env.cmd
+if ErrorLevel 1 goto failure
 
 if exist docker-compose.override.yml (
     docker compose -f docker-compose.yml -f docker-compose.override.yml pull
