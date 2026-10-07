@@ -2,13 +2,8 @@
 call env.cmd
 if ErrorLevel 1 goto failure
 
-if exist docker-compose.override.yml (
-    docker compose -f docker-compose.yml -f docker-compose.override.yml pull
-    if ErrorLevel 1 goto failure
-) else (
-    docker compose pull
-    if ErrorLevel 1 goto failure
-)
+docker compose pull
+if ErrorLevel 1 goto failure
 
 :complete
 goto end
