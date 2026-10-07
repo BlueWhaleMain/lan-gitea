@@ -17,6 +17,7 @@ services:
       - no-new-privileges:true
     tmpfs:
       - /tmp
+    user: git:git
     volumes:
       - config:/etc/gitea
       - data:/var/lib/gitea
@@ -25,14 +26,4 @@ networks:
     external: true
 volumes:
   config:
-    driver: local
-    driver_opts:
-      device: ${CONFIG_DIR}
-      o: 'bind'
-      type: 'none'
   data:
-    driver: local
-    driver_opts:
-      device: ${DATA_DIR}
-      o: 'bind'
-      type: 'none'
